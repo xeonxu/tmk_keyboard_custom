@@ -79,7 +79,8 @@ extern const uint16_t fn_actions[];
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  K4C,K4D,K4E,  K5F,K60,K61,K57, K76,K7A, \
     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K32,K28,                K5C,K5D,K5E,K85, K77,K7C, \
     KE1,K64,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    K87,KE5,      K52,      K59,K5A,K5B,K67, K74,K7D, \
-    KE0,KE3,KE2,K8B,K91,    K2C,    K90,K8A,K88,KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, K7E,K7B  \
+    KE0,KE3,KE2,K8B,K91,    K2C,    K90,K8A,K88,KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, K7E,K7B, \
+    KF4,KF5,KF6,KF7,KF8,KF9,KFA,KFB,KFC \
 ) { \
     { KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_##K04, KC_##K05, KC_##K06, KC_##K07,   /* 00-07 */ \
       KC_##K08, KC_##K09, KC_##K0A, KC_##K0B, KC_##K0C, KC_##K0D, KC_##K0E, KC_##K0F }, /* 08-0F */ \
@@ -111,8 +112,8 @@ extern const uint16_t fn_actions[];
       KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO    }, /* D8-DF */ \
     { KC_##KE0, KC_##KE1, KC_##KE2, KC_##KE3, KC_##KE4, KC_##KE5, KC_##KE6, KC_##KE7,   /* E0-E7 */ \
       KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO    }, /* E8-EF */ \
-    { KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,      /* F0-F7 */ \
-      KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO    }, /* F8-FF */ \
+    { KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_##KF4, KC_##KF5, KC_##KF6, KC_##KF7,   /* F0-F7 */ \
+      KC_##KF8, KC_##KF9, KC_##KFA, KC_##KFB, KC_##KFC, KC_NO,    KC_NO,    KC_NO    }, /* F8-FF */ \
 }
 
 /* ,---.   ,---------------. ,---------------. ,---------------. ,-----------.
@@ -144,7 +145,8 @@ extern const uint16_t fn_actions[];
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  K4C,K4D,K4E,  K5F,K60,K61,K57, NO, NO,  \
     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                K5C,K5D,K5E,NO,  NO, NO,  \
     KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \
-    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \
+    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO, \
+    BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R\
 )
 
 /* ,---.   ,---------------. ,---------------. ,---------------. ,-----------.
@@ -176,7 +178,8 @@ extern const uint16_t fn_actions[];
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K32,  K4C,K4D,K4E,  K5F,K60,K61,K57, NO, NO,  \
     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K32,K28,                K5C,K5D,K5E,NO,  NO, NO,  \
     KE1,K64,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \
-    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \
+    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO, \
+    BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R\
 )
 
 /* ,---.   ,---------------. ,---------------. ,---------------. ,-----------.
@@ -208,6 +211,7 @@ extern const uint16_t fn_actions[];
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K32,  K4C,K4D,K4E,  K5F,K60,K61,K57, NO, NO,  \
     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K32,K28,                K5C,K5D,K5E,NO,  NO, NO,  \
     KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    K87,KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \
-    KE0,KE3,KE2,K8B,NO,     K2C,    NO, K8A,K88,KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \
+    KE0,KE3,KE2,K8B,NO,     K2C,    NO, K8A,K88,KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO, \
+    BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R\
 )
 #endif
