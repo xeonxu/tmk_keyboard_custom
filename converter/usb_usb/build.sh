@@ -16,5 +16,5 @@ do
 	USB=`diff /tmp/1 /tmp/2 | grep -o '/dev/tty.*'`;
     done;
     echo DEV: $USB
-    DEV=$USB make program || fail
+    DEV=$USB KEYMAP=noe make program || fail
 done
