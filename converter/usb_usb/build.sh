@@ -1,5 +1,5 @@
 #!/bin/bash
-make clean&&KEYMAP=noe make -j`grep cpu /proc/cpuinfo|wc -l`
+make clean&&KEYMAP=noe make -j4
 
 function fail {
     unset USB
