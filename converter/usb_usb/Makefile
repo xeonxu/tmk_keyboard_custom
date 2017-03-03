@@ -134,9 +134,14 @@ VPATH += $(TMK_DIR)
 
 
 # program Leonardo
-PROGRAM_CMD = avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV)
+PROGRAM_CMD = @if [ "$(DEV)" != "" ]; then \
+    while [ ! -e "$(DEV)" ];do echo -n "Waiting for $(DEV)...\r";sleep 0.1;done; \
+    sudo avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV); \
+    else \
+    echo "DEV does not define!"; \
+    fi
 
-
+# PROGRAM_CMD = sudo avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV)
 
 include $(TMK_DIR)/protocol/usb_hid.mk
 include $(TMK_DIR)/protocol/lufa.mk
