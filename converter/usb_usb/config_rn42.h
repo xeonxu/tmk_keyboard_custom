@@ -28,30 +28,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /* matrix size */
-#ifdef HHKB_JP
-#   define MATRIX_ROWS 16
-#else
-#   define MATRIX_ROWS 8
-#endif
-#define MATRIX_COLS 8
+#define MATRIX_ROWS 16
+#define MATRIX_COLS 16
 
+// /* keymap in eeprom */
+// #define FN_ACTIONS_COUNT 32
+// #define KEYMAPS_COUNT 3
+
+// /* number of leds */
+// #define LED_COUNT 3
+// #define EECONFIG_LEDMAP_IN_EEPROM 8
 
 /* key combination for command */
 #define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))) 
 
 
-/* period of tapping(ms) */
-#define TAPPING_TERM    300
-/* tap count needed for toggling a feature */
-#define TAPPING_TOGGLE  5
-/* Oneshot timeout(ms) */
-#define ONESHOT_TIMEOUT 300
+// /* period of tapping(ms) */
+// #define TAPPING_TERM    300
+// /* tap count needed for toggling a feature */
+// #define TAPPING_TOGGLE  5
+// /* Oneshot timeout(ms) */
+// #define ONESHOT_TIMEOUT 300
 
-/* Boot Magic salt key: Space */
-#define BOOTMAGIC_KEY_SALT      KC_SPACE
+// /* Boot Magic salt key: Space */
+// #define BOOTMAGIC_KEY_SALT      KC_SPACE
 
-/* power control of key switch board */
-#define HHKB_POWER_SAVING
+// /* power control of key switch board */
+// #define HHKB_POWER_SAVING
 
 /*
  * Hardware Serial(UART)
