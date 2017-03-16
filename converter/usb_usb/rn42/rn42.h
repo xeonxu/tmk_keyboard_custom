@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "host_driver.h"
+#include "progmem.h"
 
 host_driver_t rn42_driver;
 host_driver_t rn42_config_driver;
