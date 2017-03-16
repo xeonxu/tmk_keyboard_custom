@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x4242
 #define DEVICE_VER      0x0104
 #define MANUFACTURER    t.m.k.
-#define PRODUCT         HHKB mod
-#define DESCRIPTION     t.m.k. keyboard firmware for HHKB mod
+#define PRODUCT         USB2USB mod
+#define DESCRIPTION     t.m.k. keyboard firmware for USB2USB mod
 
 
 /* matrix size */
@@ -105,8 +105,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* disable action features */
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
-//#define NO_ACTION_ONESHOT
-//#define NO_ACTION_MACRO
+#define NO_ACTION_ONESHOT
+#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
 
 #endif

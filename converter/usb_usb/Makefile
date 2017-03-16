@@ -39,15 +39,15 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = usb_usb
+TARGET ?= usb_usb
 
-TMK_DIR = ../../tmk_core_custom
+TMK_DIR ?= ../../tmk_core_custom
 
 # Directory keyboard dependent files exist
-TARGET_DIR = .
+TARGET_DIR ?= .
 
 # MCU name
-MCU = atmega32u4
+MCU ?= atmega32u4
 
 
 # Processor frequency.
@@ -81,7 +81,7 @@ ARCH = AVR8
 #
 #     If no clock division is performed on the input clock inside the AVR (via the
 #     CPU clock adjust registers or the clock division fuses), this will be equal to F_CPU.
-F_USB = $(F_CPU)
+F_USB ?= $(F_CPU)
 # Interrupt driven control endpoint task
 OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 
@@ -93,17 +93,20 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 MOUSEKEY_ENABLE = yes	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Media control and System control
 # CONSOLE_ENABLE = yes	# Console for debug
-# COMMAND_ENABLE = yes    # Commands for debug and configuration
+COMMAND_ENABLE = yes    # Commands for debug and configuration
 #NKRO_ENABLE = yes	# USB Nkey Rollover
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
 
-# Boot Section Size in bytes
+# Boot Section Size in *bytes*
 #   Teensy halfKay   512
-#   Atmel DFU loader 4096
+#   Teensy++ halfKay 1024
+#   BootHID          1024
+#   Atmel DFU loader 4096	(TMK Alt Controller)
 #   LUFA bootloader  4096
-OPT_DEFS += -DBOOTLOADER_SIZE=4096
+#   USBaspLoader     2048
+OPT_DEFS += -DBOOTLOADER_SIZE=1024
 
 #LDFLAGS += -Wl,--relax
 
@@ -123,7 +126,12 @@ else
     SRC := keymap.c $(SRC)
 endif
 
-CONFIG_H = config.h
+ifeq (yes,$(strip $(RN42_ENABLE)))
+CONFIG_H ?= config_rn42.h
+else
+CONFIG_H ?= config.h
+endif
+
 
 
 
@@ -143,6 +151,10 @@ PROGRAM_CMD = @if [ "$(DEV)" != "" ]; then \
 
 # PROGRAM_CMD = sudo avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV)
 
+ifeq (yes,$(strip $(RN42_ENABLE)))
+include rn42.mk
+include $(TMK_DIR)/protocol.mk
+endif
 include $(TMK_DIR)/protocol/usb_hid.mk
 include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
