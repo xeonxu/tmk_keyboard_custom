@@ -85,16 +85,15 @@ F_USB ?= $(F_CPU)
 # Interrupt driven control endpoint task
 OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 
-
-
 # Build Options
 #   comment out to disable the options.
 #
 MOUSEKEY_ENABLE = yes	# Mouse keys
+MOUSESUPPORT_ENABLE ?= no	# Mouse support
 EXTRAKEY_ENABLE = yes	# Media control and System control
 # CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
-#NKRO_ENABLE = yes	# USB Nkey Rollover
+# NKRO_ENABLE = yes	# USB Nkey Rollover
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
@@ -114,6 +113,7 @@ OPT_DEFS += -DBOOTLOADER_SIZE=1024
 #OPT_DEFS += -DNO_ACTION_LAYER
 #OPT_DEFS += -DNO_ACTION_MACRO
 
+
 SRC =  \
        keymap_common.c \
        ledmap.c \
@@ -124,6 +124,10 @@ ifdef KEYMAP
     SRC := keymap_$(KEYMAP).c $(SRC)
 else
     SRC := keymap.c $(SRC)
+endif
+
+ifeq (yes,$(strip $(MOUSESUPPORT_ENABLE)))
+OPT_DEFS += -DMOUSESUPPORT=1
 endif
 
 ifeq (yes,$(strip $(RN42_ENABLE)))
