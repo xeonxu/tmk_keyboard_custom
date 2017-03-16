@@ -55,6 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* ) */
 
 
+#if MOUSESUPPORT==1
 #define KEYMAP_HHKB( \
     K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,\
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,\
@@ -71,6 +72,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  NO, NO, NO,   NO,     NO, NO, NO, NO,	\
     BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R \
 )
+#else
+#define KEYMAP_HHKB( \
+    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,\
+    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,\
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,\
+    KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,\
+    KE0,KE3,KE2,        K2C,                KE6,KE7,K65,KE4\
+) KEYMAP_ALL( \
+            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,                                               \
+    NO,     NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,       NO, NO, NO,   NO, NO, NO, NO, NO,      \
+    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
+    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                NO, NO, NO, NO, NO, NO,  \
+    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,       NO,      NO, NO, NO, NO, NO, NO,  \
+    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  NO, NO, NO,   NO,     NO, NO, NO, NO 	\
+)
+#endif
 
 enum keymap_layout {
     BASE = 0,
