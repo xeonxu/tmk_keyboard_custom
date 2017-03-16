@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Target file name (without extension).
-TARGET = usb_usb
+TARGET = usb_usb_rn42
 
 TMK_DIR = ../../tmk_core_custom
 
@@ -61,9 +61,7 @@ MCU = atmega32u4
 #     does not *change* the processor frequency - it should merely be updated to
 #     reflect the processor speed set externally so that the code can use accurate
 #     software delays.
-F_CPU = 16000000
-
-
+F_CPU ?= 16000000
 
 #
 # LUFA specific
@@ -85,25 +83,28 @@ F_USB = $(F_CPU)
 # Interrupt driven control endpoint task
 OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 
-
+# Boot Section Size in *bytes*
+#   Teensy halfKay   512
+#   Teensy++ halfKay 1024
+#   BootHID          1024
+#   Atmel DFU loader 4096	(TMK Alt Controller)
+#   LUFA bootloader  4096
+#   USBaspLoader     2048
+OPT_DEFS += -DBOOTLOADER_SIZE=1024
 
 # Build Options
 #   comment out to disable the options.
 #
+# BOOTMAGIC_ENABLE = yes		# Virtual DIP switch configuration
 MOUSEKEY_ENABLE = yes	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Media control and System control
 # CONSOLE_ENABLE = yes	# Console for debug
-# COMMAND_ENABLE = yes    # Commands for debug and configuration
-#NKRO_ENABLE = yes	# USB Nkey Rollover
+COMMAND_ENABLE = yes    # Commands for debug and configuration
+# NKRO_ENABLE = yes	# USB Nkey Rollover
+# KEYMAP_SECTION_ENABLE = yes	# fixed address keymap for keymap editor
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
-
-# Boot Section Size in bytes
-#   Teensy halfKay   512
-#   Atmel DFU loader 4096
-#   LUFA bootloader  4096
-OPT_DEFS += -DBOOTLOADER_SIZE=4096
 
 #LDFLAGS += -Wl,--relax
 
@@ -123,7 +124,7 @@ else
     SRC := keymap.c $(SRC)
 endif
 
-CONFIG_H = config.h
+CONFIG_H = config_rn42.h
 
 
 
@@ -143,6 +144,11 @@ PROGRAM_CMD = @if [ "$(DEV)" != "" ]; then \
 
 # PROGRAM_CMD = sudo avrdude -p$(MCU) -cavr109 -b57600 -Uflash:w:$(TARGET).hex -P$(DEV)
 
+RN42_ENABLE=yes
+ifeq (yes,$(strip $(RN42_ENABLE)))
+include rn42.mk
+include $(TMK_DIR)/protocol.mk
+endif
 include $(TMK_DIR)/protocol/usb_hid.mk
 include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
