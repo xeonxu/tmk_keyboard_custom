@@ -14,6 +14,29 @@
 #include "wait.h"
 #include "suart.h"
 #include "suspend.h"
+#include "debug.h"
+
+/* LED ping configuration */
+//#define TMK_LED
+#define LEONARDO_LED
+#if defined(TMK_LED)
+// For TMK converter and Teensy
+#define LED_TX_INIT    (DDRD  |=  (1<<6))
+#define LED_TX_ON      (PORTD |=  (1<<6))
+#define LED_TX_OFF     (PORTD &= ~(1<<6))
+#define LED_TX_TOGGLE  (PORTD ^=  (1<<6))
+#elif defined(LEONARDO_LED)
+// For Leonardo(TX LED)
+#define LED_TX_INIT    (DDRD  |=  (1<<5))
+#define LED_TX_ON      (PORTD &= ~(1<<5))
+#define LED_TX_OFF     (PORTD |=  (1<<5))
+#define LED_TX_TOGGLE  (PORTD ^=  (1<<5))
+#else
+#define LED_TX_INIT
+#define LED_TX_ON
+#define LED_TX_OFF
+#define LED_TX_TOGGLE
+#endif
 
 static int8_t sendchar_func(uint8_t c)
 {
@@ -47,9 +70,19 @@ static void SetupHardware(void)
     PORTD |= (1<<1);
 }
 
+bool kbd_init  __attribute__ ((weak));
+bool kbd_init;
+
 int main(void)  __attribute__ ((weak));
 int main(void)
 {
+    // LED for debug
+    LED_TX_INIT;
+    LED_TX_ON;
+
+    debug_enable = true;
+    debug_keyboard = true;
+
     SetupHardware();
     sei();
 
@@ -64,6 +97,9 @@ int main(void)
 #endif
     }
     print("\nUSB init\n");
+    kbd_init = true;
+    debug("init: done\n");
+
 
     rn42_init();
     rn42_task_init();
