@@ -70,8 +70,7 @@ static void SetupHardware(void)
     PORTD |= (1<<1);
 }
 
-bool kbd_init  __attribute__ ((weak));
-bool kbd_init;
+bool kbd_init  __attribute__ ((weak)) = false;
 
 int main(void)  __attribute__ ((weak));
 int main(void)

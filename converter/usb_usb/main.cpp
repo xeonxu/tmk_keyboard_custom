@@ -52,8 +52,8 @@ static void LUFA_setup(void)
     USB_Device_EnableSOFEvents();
     print_set_sendchar(sendchar);
 }
-bool kbd_init  __attribute__ ((weak));
-bool kbd_init = false;
+
+bool kbd_init  __attribute__ ((weak)) = false;
 
 int main(void)  __attribute__ ((weak));
 int main(void)
