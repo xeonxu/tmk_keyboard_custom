@@ -55,6 +55,7 @@ static void LUFA_setup(void)
 
 bool kbd_init = false;
 
+int main(void)  __attribute__ ((weak));
 int main(void)
 {
     // LED for debug
