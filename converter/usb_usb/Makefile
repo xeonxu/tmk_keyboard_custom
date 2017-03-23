@@ -88,7 +88,7 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 # Build Options
 #   comment out to disable the options.
 #
-MOUSEKEY_ENABLE = yes	# Mouse keys
+# MOUSEKEY_ENABLE = yes	# Mouse keys
 # HID_MOUSE_ENABLE = yes # Use mouse via U2U
 EXTRAKEY_ENABLE = yes	# Media control and System control
 CONSOLE_ENABLE = yes	# Console for debug
