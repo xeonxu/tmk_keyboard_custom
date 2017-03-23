@@ -89,10 +89,10 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   comment out to disable the options.
 #
 MOUSEKEY_ENABLE = yes	# Mouse keys
-MOUSESUPPORT_ENABLE ?= no	# Mouse support
+# HID_MOUSE_ENABLE = yes # Use mouse via U2U
 EXTRAKEY_ENABLE = yes	# Media control and System control
-# CONSOLE_ENABLE = yes	# Console for debug
-# COMMAND_ENABLE = yes    # Commands for debug and configuration
+CONSOLE_ENABLE = yes	# Console for debug
+COMMAND_ENABLE = yes    # Commands for debug and configuration
 # NKRO_ENABLE = yes	# USB Nkey Rollover
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
@@ -126,8 +126,12 @@ else
     SRC := keymap.c $(SRC)
 endif
 
-ifeq (yes,$(strip $(MOUSESUPPORT_ENABLE)))
-OPT_DEFS += -DMOUSESUPPORT=1
+ifeq (yes,$(strip $(HID_MOUSE_ENABLE)))
+OPT_DEFS += -DHID_MOUSE_ENABLE
+OPT_DEFS += -DHID_COMPOSITE_ENABLE
+ifneq (yes,$(strip $(MOUSEKEY_ENABLE)))
+MOUSEKEY_ENABLE = yes	# Mouse keys
+endif
 endif
 
 ifeq (yes,$(strip $(RN42_ENABLE)))

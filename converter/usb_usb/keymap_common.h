@@ -72,8 +72,8 @@ extern const uint16_t fn_actions[];
  *
  * TODO: use same keycode to pass through instead of KC_NO?
  */
-#if MOUSESUPPORT==1
-//  MOUSESUPPORT ENABLED
+#if defined(HID_MOUSE_ENABLE)
+//  HID_MOUSE_ENABLE
 #define KEYMAP_ALL( \
             K68,K69,K6A,K6B,K6C,K6D,K6E,K6F,K70,K71,K72,K73,                                              \
     K29,    K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,  K81,K80,K7F,K66, K75,     \
@@ -216,7 +216,7 @@ extern const uint16_t fn_actions[];
     BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R\
 )
 #else
-// NO MOUSESUPPORT ENABLED
+// HID_MOUSE_ENABLE undefined
 #define KEYMAP_ALL( \
             K68,K69,K6A,K6B,K6C,K6D,K6E,K6F,K70,K71,K72,K73,                                              \
     K29,    K3A,K3B,K3C,K3D,K3E,K3F,K40,K41,K42,K43,K44,K45,      K46,K47,K48,  K81,K80,K7F,K66, K75,     \
@@ -355,7 +355,7 @@ extern const uint16_t fn_actions[];
     KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    K87,KE5,      K52,      K59,K5A,K5B,NO,  NO, NO,  \
     KE0,KE3,KE2,K8B,NO,     K2C,    NO, K8A,K88,KE6,KE7,K65,KE4,  K50,K51,K4F,  K62,    K63,K58, NO, NO   \
 )
-#endif
+#endif //HID_MOUSE_ENABLE
 
 
 #endif //KEYMAP_COMMON_H
