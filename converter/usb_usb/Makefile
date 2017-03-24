@@ -89,9 +89,9 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   comment out to disable the options.
 #
 # MOUSEKEY_ENABLE = yes	# Mouse keys
-# HID_MOUSE_ENABLE = yes # Use mouse via U2U
+HID_MOUSE_ENABLE = yes # Use mouse via U2U
 EXTRAKEY_ENABLE = yes	# Media control and System control
-CONSOLE_ENABLE = yes	# Console for debug
+# CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
 # NKRO_ENABLE = yes	# USB Nkey Rollover
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
@@ -163,7 +163,14 @@ include $(TMK_DIR)/protocol/lufa.mk
 include $(TMK_DIR)/common.mk
 include $(TMK_DIR)/rules.mk
 
-debug-on: EXTRAFLAGS += -DDEBUG -DDEBUG_ACTION
+debug-on: MOUSEKEY_ENABLE := NO	# Mouse keys
+debug-on: EXTRAFLAGS += -DCONSOLE_ENABLE -DCOMMAND_ENABLE -DDEBUG
+debug-on: OPT_DEFS := $(filter-out -DNO_DEBUG,$(OPT_DEFS))
+debug-on: OPT_DEFS := $(filter-out -DNO_PRINT,$(OPT_DEFS))
+debug-on: OPT_DEFS := $(filter-out -DHID_MOUSE_ENABLE,$(OPT_DEFS))
+debug-on: OPT_DEFS := $(filter-out -DHID_COMPOSITE_ENABLE,$(OPT_DEFS))
+debug-on: OPT_DEFS := $(filter-out -DMOUSE_ENABLE,$(OPT_DEFS))
+debug-on: OPT_DEFS := $(filter-out -DMOUSEKEY_ENABLE,$(OPT_DEFS))
 debug-on: all
 
 debug-off: EXTRAFLAGS += -DNO_DEBUG -DNO_PRINT
