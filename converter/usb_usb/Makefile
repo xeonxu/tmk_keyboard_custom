@@ -140,14 +140,9 @@ else
 CONFIG_H ?= config.h
 endif
 
-
-
-
 # Search Path
 VPATH += $(TARGET_DIR)
 VPATH += $(TMK_DIR)
-
-
 
 # program Leonardo
 PROGRAM_CMD = @if [ "$(DEV)" != "" ]; then \
