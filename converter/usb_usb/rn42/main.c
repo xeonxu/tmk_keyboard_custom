@@ -18,7 +18,7 @@
 
 /* LED ping configuration */
 //#define TMK_LED
-#define LEONARDO_LED
+//#define LEONARDO_LED
 #if defined(TMK_LED)
 // For TMK converter and Teensy
 #define LED_TX_INIT    (DDRD  |=  (1<<6))

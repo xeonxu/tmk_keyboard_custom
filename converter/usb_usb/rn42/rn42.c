@@ -42,8 +42,8 @@ void rn42_init(void)
     PORTF &= ~(1<<1);
 
     // PD5: CTS(low: allow to send, high:not allow)
-    DDRD |= (1<<5);
-    PORTD &= ~(1<<5);
+    DDRD |= (1<<4);
+    PORTD &= ~(1<<4);
 
     serial_init();
 }
@@ -111,13 +111,13 @@ bool rn42_rts(void)
 void rn42_cts_hi(void)
 {
     // not allow to send
-    PORTD |= (1<<5);
+    PORTD |= (1<<4);
 }
 
 void rn42_cts_lo(void)
 {
     // allow to send
-    PORTD &= ~(1<<5);
+    PORTD &= ~(1<<4);
 }
 
 bool rn42_linked(void)

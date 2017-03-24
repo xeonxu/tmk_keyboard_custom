@@ -78,11 +78,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         UCSR1B |= (0<<TXCIE1) | (1<<TXEN1); /* TX interrupt, TX: enable */ \
         UCSR1C |= (0<<UPM11) | (0<<UPM10);  /* parity: none(00), even(01), odd(11) */ \
         UCSR1D |= (0<<RTSEN) | (0<<CTSEN);  /* RTS, CTS(no flow control by hardware) */ \
-        DDRD |= (1<<5); PORTD &= ~(1<<5);   /* RTS for flow control by firmware */ \
+        DDRD |= (1<<4); PORTD &= ~(1<<4);   /* RTS for flow control by firmware */ \
         sei(); \
     } while(0)
-    #define SERIAL_UART_RTS_LO()    do { PORTD &= ~(1<<5); } while (0)
-    #define SERIAL_UART_RTS_HI()    do { PORTD |=  (1<<5); } while (0)
+    #define SERIAL_UART_RTS_LO()    do { PORTD &= ~(1<<4); } while (0)
+    #define SERIAL_UART_RTS_HI()    do { PORTD |=  (1<<4); } while (0)
 #else
     #error "USART configuration is needed."
 #endif
