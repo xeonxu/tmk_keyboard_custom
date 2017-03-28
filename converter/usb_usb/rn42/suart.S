@@ -17,7 +17,20 @@
 #include <avr/io.h>
 .list
 
+#if (F_CPU==20000000)
+#define	BPS	56 	/* Bit delay. (see above table) */
+#elif (F_CPU==16000000)
 #define	BPS	44 	/* Bit delay. (see above table) */
+#elif (F_CPU==12000000)
+#define	BPS	33 	/* Bit delay. (see above table) */
+#elif (F_CPU==10000000)
+#define	BPS	27 	/* Bit delay. (see above table) */
+#elif (F_CPU==8000000)
+#define	BPS	21 	/* Bit delay. (see above table) */
+#else
+#error "Wrong CPU frequence defined."
+#endif
+
 #define	BIDIR	0	/* 0:Separated Tx/Rx, 1:Shared Tx/Rx */
 
 #define	OUT_1		sbi _SFR_IO_ADDR(SUART_OUT_PORT), SUART_OUT_BIT	/* Output 1 */
@@ -68,7 +81,7 @@ xmit:
 	ldi	r25, 10		;Bit counter
 	cli			;Start critical section
 
-1:	ldi	r23, BPS-1	;----- Bit transferring loop 
+1:	ldi	r23, BPS-1	;----- Bit transferring loop
 2:	dec	r23     	;Wait for a bit time
 	brne	2b		;/
 	brcs	3f		;MISO = bit to be sent
