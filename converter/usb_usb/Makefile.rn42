@@ -1,4 +1,5 @@
 TARGET ?= usb_usb_rn42
 CONFIG_H ?= config_rn42.h
 RN42_ENABLE ?= yes
+BT_STORE ?= yes
 include Makefile

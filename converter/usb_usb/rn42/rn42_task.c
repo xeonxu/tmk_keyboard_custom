@@ -22,11 +22,11 @@ static bool force_usb = false;
 static void status_led(bool on)
 {
     if (on) {
-        DDRE  |=  (1<<6);
-        PORTE &= ~(1<<6);
+        DDRD  |=  (1<<5);
+        PORTD &= ~(1<<5);
     } else {
-        DDRE  |=  (1<<6);
-        PORTE |=  (1<<6);
+        DDRD  |=  (1<<5);
+        PORTD |=  (1<<5);
     }
 }
 
@@ -159,7 +159,11 @@ static void init_rn42(void)
     SEND_COMMAND("SF,1\r\n");  // factory defaults
     SEND_COMMAND("SN,U2U-BT\r\n");
     SEND_COMMAND("SS,Keyboard/Mouse\r\n");
+#ifdef BT_STORE
+    SEND_COMMAND("SM,6\r\n");  // Pairing Mode(Using stored remote address.)
+#else
     SEND_COMMAND("SM,4\r\n");  // auto connect(DTR)
+#endif
     SEND_COMMAND("SW,8000\r\n");   // Sniff disable
     SEND_COMMAND("S~,6\r\n");   // HID profile
     SEND_COMMAND("SH,003C\r\n");   // combo device, out-report, 4-reconnect
@@ -168,7 +172,7 @@ static void init_rn42(void)
     if (!config_mode) exit_command_mode();
 }
 
-#if 0
+#ifdef BT_STORE
 // Switching connections
 // NOTE: Remote Address doesn't work in the way manual says.
 // EEPROM address for link store
@@ -241,7 +245,7 @@ bool command_extra(uint8_t code)
             print("b:       battery voltage\n");
             print("Del:     enter/exit RN-42 config mode\n");
             print("Slck:    RN-42 initialize\n");
-#if 0
+#ifdef BT_STORE
             print("1-4:     restore link\n");
             print("F1-F4:   store link\n");
 #endif
@@ -256,7 +260,7 @@ bool command_extra(uint8_t code)
         case KC_P:
             pairing();
             return true;
-#if 0
+#ifdef BT_STORE
         /* Store link address to EEPROM */
         case KC_F1:
             store_link(RN42_LINK0);
@@ -315,7 +319,7 @@ bool command_extra(uint8_t code)
             uint8_t m = t%3600/60;
             uint8_t s = t%60;
             xprintf("uptime: %02u %02u:%02u:%02u\n", d, h, m, s);
-#if 0
+#ifdef BT_STORE
             xprintf("LINK0: %s\r\n", get_link(RN42_LINK0));
             xprintf("LINK1: %s\r\n", get_link(RN42_LINK1));
             xprintf("LINK2: %s\r\n", get_link(RN42_LINK2));

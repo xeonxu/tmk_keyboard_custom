@@ -147,6 +147,10 @@ else
 CONFIG_H ?= config.h
 endif
 
+ifeq (yes,$(strip $(BT_STORE)))
+OPT_DEFS += -DBT_STORE
+endif
+
 # Search Path
 VPATH += $(TARGET_DIR)
 VPATH += $(TMK_DIR)
