@@ -157,7 +157,7 @@ static void init_rn42(void)
     // RN-42 configure
     if (!config_mode) enter_command_mode();
     SEND_COMMAND("SF,1\r\n");  // factory defaults
-    SEND_COMMAND("S-,TmkBT\r\n");
+    SEND_COMMAND("SN,U2U-BT\r\n");
     SEND_COMMAND("SS,Keyboard/Mouse\r\n");
     SEND_COMMAND("SM,4\r\n");  // auto connect(DTR)
     SEND_COMMAND("SW,8000\r\n");   // Sniff disable

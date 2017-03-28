@@ -20,11 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x4242
+#define PRODUCT_ID      0xB7B7
 #define DEVICE_VER      0x0104
 #define MANUFACTURER    t.m.k.
-#define PRODUCT         USB2USB mod
-#define DESCRIPTION     t.m.k. keyboard firmware for USB2USB mod
+#define PRODUCT         USB2USB BT
+#define DESCRIPTION     t.m.k. keyboard firmware for USB2USB BT
 
 
 /* matrix size */
