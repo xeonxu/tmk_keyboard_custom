@@ -147,8 +147,12 @@ else
 CONFIG_H ?= config.h
 endif
 
-ifeq (yes,$(strip $(BT_STORE)))
-OPT_DEFS += -DBT_STORE
+ifeq (yes,$(strip $(BTSTORE_ENABLE)))
+OPT_DEFS += -DBTSTORE_ENABLE
+endif
+
+ifeq (yes,$(strip $(BATTERY_ENABLE)))
+OPT_DEFS += -DBATTERY_ENABLE
 endif
 
 # Search Path

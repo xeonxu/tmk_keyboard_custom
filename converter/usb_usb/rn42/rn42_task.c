@@ -14,7 +14,9 @@
 #include "timer.h"
 #include "wait.h"
 #include "command.h"
+#ifdef BATTERY_ENABLE
 #include "battery.h"
+#endif
 
 static bool config_mode = false;
 static bool force_usb = false;
@@ -32,7 +34,9 @@ static void status_led(bool on)
 
 void rn42_task_init(void)
 {
+#ifdef BATTERY_ENABLE
     battery_init();
+#endif
 }
 
 void rn42_task(void)
@@ -81,6 +85,7 @@ void rn42_task(void)
     }
 
 
+#ifdef BATTERY_ENABLE
     static uint16_t prev_timer = 0;
     uint16_t e = timer_elapsed(prev_timer);
     if (e > 1000) {
@@ -108,7 +113,7 @@ void rn42_task(void)
             */
         }
     }
-
+#endif
 
     /* Connection monitor */
     if (!rn42_rts() && rn42_linked()) {
@@ -159,7 +164,7 @@ static void init_rn42(void)
     SEND_COMMAND("SF,1\r\n");  // factory defaults
     SEND_COMMAND("SN,U2U-BT\r\n");
     SEND_COMMAND("SS,Keyboard/Mouse\r\n");
-#ifdef BT_STORE
+#ifdef BTSTORE_ENABLE
     SEND_COMMAND("SM,6\r\n");  // Pairing Mode(Using stored remote address.)
 #else
     SEND_COMMAND("SM,4\r\n");  // auto connect(DTR)
@@ -172,7 +177,7 @@ static void init_rn42(void)
     if (!config_mode) exit_command_mode();
 }
 
-#ifdef BT_STORE
+#ifdef BTSTORE_ENABLE
 // Switching connections
 // NOTE: Remote Address doesn't work in the way manual says.
 // EEPROM address for link store
@@ -242,10 +247,12 @@ bool command_extra(uint8_t code)
         case KC_SLASH: /* ? */
             print("\n\n----- Bluetooth RN-42 Help -----\n");
             print("i:       RN-42 info\n");
+#ifdef BATTERY_ENABLE
             print("b:       battery voltage\n");
+#endif
             print("Del:     enter/exit RN-42 config mode\n");
             print("Slck:    RN-42 initialize\n");
-#ifdef BT_STORE
+#ifdef BTSTORE_ENABLE
             print("1-4:     restore link\n");
             print("F1-F4:   store link\n");
 #endif
@@ -260,7 +267,7 @@ bool command_extra(uint8_t code)
         case KC_P:
             pairing();
             return true;
-#ifdef BT_STORE
+#ifdef BTSTORE_ENABLE
         /* Store link address to EEPROM */
         case KC_F1:
             store_link(RN42_LINK0);
@@ -302,6 +309,7 @@ bool command_extra(uint8_t code)
                     (USB_DeviceState == DEVICE_STATE_Addressed) ? "Addressed" :
                     (USB_DeviceState == DEVICE_STATE_Configured) ? "Configured" :
                     (USB_DeviceState == DEVICE_STATE_Suspended) ? "Suspended" : "?");
+#ifdef BATTERY_ENABLE
             xprintf("battery: ");
             switch (battery_status()) {
                 case FULL_CHARGED:  xprintf("FULL"); break;
@@ -311,6 +319,7 @@ bool command_extra(uint8_t code)
                 default:            xprintf("?"); break;
             };
             xprintf("\n");
+#endif
             xprintf("RemoteWakeupEnabled: %X\n", USB_Device_RemoteWakeupEnabled);
             xprintf("VBUS: %X\n", USBSTA&(1<<VBUS));
             t = timer_read32()/1000;
@@ -319,13 +328,14 @@ bool command_extra(uint8_t code)
             uint8_t m = t%3600/60;
             uint8_t s = t%60;
             xprintf("uptime: %02u %02u:%02u:%02u\n", d, h, m, s);
-#ifdef BT_STORE
+#ifdef BTSTORE_ENABLE
             xprintf("LINK0: %s\r\n", get_link(RN42_LINK0));
             xprintf("LINK1: %s\r\n", get_link(RN42_LINK1));
             xprintf("LINK2: %s\r\n", get_link(RN42_LINK2));
             xprintf("LINK3: %s\r\n", get_link(RN42_LINK3));
 #endif
             return true;
+#ifdef BATTERY_ENABLE
         case KC_B:
             // battery monitor
             t = timer_read32()/1000;
@@ -335,6 +345,7 @@ bool command_extra(uint8_t code)
             xprintf("%02u:",   t%3600/60);
             xprintf("%02u\n",  t%60);
             return true;
+#endif
         case KC_U:
             if (config_mode) return false;
             if (force_usb) {
