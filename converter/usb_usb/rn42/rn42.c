@@ -37,9 +37,9 @@ void rn42_init(void)
     DDRF  &= ~(1<<6);
     PORTF |=  (1<<6);
 
-    // PF1: RTS(low: allowed to send, high: not allowed)
-    DDRF &= ~(1<<1);
-    PORTF &= ~(1<<1);
+    // PC6: RTS(low: allowed to send, high: not allowed)
+    DDRC &= ~(1<<6);
+    PORTC &= ~(1<<6);
 
     // PD5: CTS(low: allow to send, high:not allow)
     DDRD |= (1<<4);
@@ -105,7 +105,7 @@ void rn42_disconnect(void)
 bool rn42_rts(void)
 {
     // low when RN-42 is powered and ready to receive
-    return PINF&(1<<1);
+    return PINC&(1<<6);
 }
 
 void rn42_cts_hi(void)
