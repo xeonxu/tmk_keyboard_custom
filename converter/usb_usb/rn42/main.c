@@ -107,7 +107,7 @@ int main(void)
     /* init modules */
     keyboard_init();
 
-    if (!rn42_rts()) {
+    if (!rn42_rts() && USB_DeviceState != DEVICE_STATE_Configured) {
         host_set_driver(&rn42_driver);
     } else {
         host_set_driver(&lufa_driver);

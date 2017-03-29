@@ -75,13 +75,23 @@ void rn42_task(void)
 
     /* Bluetooth mode when ready */
     if (!config_mode && !force_usb) {
-        if (!rn42_rts() && host_get_driver() != &rn42_driver) {
-            clear_keyboard();
-            host_set_driver(&rn42_driver);
-        } else if (rn42_rts() && host_get_driver() != &lufa_driver) {
-            clear_keyboard();
-            host_set_driver(&lufa_driver);
-        }
+	if(USB_DeviceState != DEVICE_STATE_Powered)
+	{
+	    if (!rn42_rts() && rn42_linked() && host_get_driver() != &rn42_driver) {
+		clear_keyboard();
+		host_set_driver(&rn42_driver);
+	    } else if ((rn42_rts() || !rn42_linked()) && host_get_driver() != &lufa_driver) {
+		clear_keyboard();
+		host_set_driver(&lufa_driver);
+	    }
+	}
+	else
+	{
+	    if (host_get_driver() != &rn42_driver) {
+		clear_keyboard();
+		host_set_driver(&rn42_driver);
+	    }
+	}
     }
 
 
