@@ -27,10 +27,10 @@
 #define LED_TX_TOGGLE  (PORTD ^=  (1<<6))
 #elif defined(LEONARDO_LED)
 // For Leonardo(TX LED)
-#define LED_TX_INIT    (DDRD  |=  (1<<5))
-#define LED_TX_ON      (PORTD &= ~(1<<5))
-#define LED_TX_OFF     (PORTD |=  (1<<5))
-#define LED_TX_TOGGLE  (PORTD ^=  (1<<5))
+#define LED_TX_INIT    (DDRB  |=  (1<<5))
+#define LED_TX_ON      (PORTB &= ~(1<<5))
+#define LED_TX_OFF     (PORTB |=  (1<<5))
+#define LED_TX_TOGGLE  (PORTB ^=  (1<<5))
 #else
 #define LED_TX_INIT
 #define LED_TX_ON
