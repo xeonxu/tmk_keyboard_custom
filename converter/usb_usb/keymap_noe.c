@@ -153,9 +153,9 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [MOUSE]=KEYMAP_HHKB(
 		     PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,TRNS,
 		     TRNS, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN3,BTN2,NO,BTN4,BTN5,    TRNS,
-		     TRNS,NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
-		     TRNS,     NO,  NO,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
-		     TRNS, TRNS,TRNS,                 FN3,              TRNS,TRNS,TRNS,TRNS
+		     TRNS, NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
+		     TRNS, MPRV,MNXT,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
+		     TRNS, MRWD,MFFD,                 FN3,              MSTP,MPLY,TRNS,TRNS
 		     ),
 
     /* Keymap : dvorak */
@@ -178,7 +178,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [LAYER]=KEYMAP_HHKB(
 		     POWER,FN11,FN12,FN13,FN14,TRNS,TRNS,NLCK,PSLS,PAST,PMNS,PMNS,PPLS,TRNS,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS, PPLS,TRNS,
-		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_4,KP_5,KP_6,PENT,TRNS,      TRNS,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_4,KP_5,KP_6,PENT,CALC,      TRNS,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_1,KP_2,KP_3,PENT,           TRNS,
 		     TRNS,TRNS,TRNS,                KP_0,               PDOT,TRNS,TRNS,TRNS
 		      ),
