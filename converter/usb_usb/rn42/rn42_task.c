@@ -172,13 +172,11 @@ static void init_rn42(void)
     // RN-42 configure
     if (!config_mode) enter_command_mode();
     SEND_COMMAND("SF,1\r\n");  // factory defaults
-    SEND_COMMAND("SN,U2U-BT\r\n");
+    SEND_COMMAND("S-,U2U-BT\r\n");
     SEND_COMMAND("SS,Keyboard/Mouse\r\n");
-#ifdef BTSTORE_ENABLE
-    SEND_COMMAND("SM,6\r\n");  // Pairing Mode(Using stored remote address.)
-#else
     SEND_COMMAND("SM,4\r\n");  // auto connect(DTR)
-#endif
+    SEND_COMMAND("SC,0000\r\n");   // Service class unknow
+    SEND_COMMAND("SD,05C0\r\n");   // Device class peripheral keyboard and mouse
     SEND_COMMAND("SW,8000\r\n");   // Sniff disable
     SEND_COMMAND("S~,6\r\n");   // HID profile
     SEND_COMMAND("SH,003C\r\n");   // combo device, out-report, 4-reconnect
