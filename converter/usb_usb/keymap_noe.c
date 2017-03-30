@@ -59,16 +59,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KEYMAP_HHKB( \
     K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,\
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,\
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,\
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,K32,K28,	\
     KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,\
     KE0,KE3,KE2,        K2C,                KE6,KE7,K65,KE4\
 ) KEYMAP_ALL( \
-            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,                                               \
-    NO,     NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,       NO, NO, NO,   NO, NO, NO, NO, NO,      \
-    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
+            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,  NO,                                               \
+    NO,     NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,  NO,       NO, NO, NO,   NO, NO, NO, NO, NO,      \
+    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E, NO,K2A,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                NO, NO, NO, NO, NO, NO,  \
-    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,       NO,      NO, NO, NO, NO, NO, NO,  \
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K32,K28,                NO, NO, NO, NO, NO, NO,  \
+    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,     NO,KE5,       NO,      NO, NO, NO, NO, NO, NO,  \
     KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  NO, NO, NO,   NO,     NO, NO, NO, NO,	\
     BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D,WH_L,WH_R \
 )
@@ -76,16 +76,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KEYMAP_HHKB( \
     K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,\
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,\
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,\
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,K32,K28,	\
     KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,\
     KE0,KE3,KE2,        K2C,                KE6,KE7,K65,KE4\
 ) KEYMAP_ALL( \
-            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,                                               \
-    NO,     NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,       NO, NO, NO,   NO, NO, NO, NO, NO,      \
-    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
+            NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,  NO,                                               \
+    NO,     NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO,  NO,       NO, NO, NO,   NO, NO, NO, NO, NO,      \
+    K29,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E, NO,K2A,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  NO, NO, NO,   NO, NO, NO, NO, NO, NO,  \
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                NO, NO, NO, NO, NO, NO,  \
-    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,       NO,      NO, NO, NO, NO, NO, NO,  \
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K32,K28,                NO, NO, NO, NO, NO, NO,  \
+    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,     NO,KE5,       NO,      NO, NO, NO, NO, NO, NO,  \
     KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  NO, NO, NO,   NO,     NO, NO, NO, NO 	\
 )
 #endif
@@ -105,7 +105,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [BASE]=KEYMAP_HHKB(
 		     FN21, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, FN2,
 		     FN23, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,    FN5,RBRC,FN22,
-		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6,     FN20,
+		     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L, FN7,    FN6, FN22,FN20,
 		     LSFT,Z,   X,   C,   V,   B,   N,   M,COMM, DOT,SLSH,             RSFT,
 		     FN4, FN8,FN0,                FN3,               RGUI,FN10, FN10, FN1
 		     ),
@@ -153,7 +153,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [MOUSE]=KEYMAP_HHKB(
 		     PWR, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,TRNS,
 		     TRNS, NO,  NO,  NO,  NO,  NO,  NO,BTN1,BTN3,BTN2,NO,BTN4,BTN5,    TRNS,
-		     TRNS, NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO,       FN20,
+		     TRNS, NO,  ACL0,ACL1,ACL2, NO, MS_L,MS_D,MS_U,MS_R,TRNS,NO, TRNS, FN20,
 		     TRNS, MPRV,MNXT,  NO,  NO,  NO,WH_L,WH_D,WH_U,WH_R,NO,         TRNS,
 		     TRNS, MRWD,MFFD,                 FN3,              MSTP,MPLY,TRNS,TRNS
 		     ),
@@ -162,7 +162,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [DVORAK]=KEYMAP_HHKB(
 		       TRNS, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,TRNS,
 		       TRNS, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, TRNS,
-		       TRNS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     FN20,
+		       TRNS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS, TRNS,FN20,
 		       TRNS,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             TRNS,
 		       TRNS, TRNS,TRNS,                FN3,                 TRNS,TRNS,TRNS, TRNS
 		       ),
@@ -170,7 +170,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [HHKB]=KEYMAP_HHKB(
 		     FN21, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS,
 		     CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS, UP, TRNS, DEL,
-		     TRNS,VOLD,VOLU,MUTE,EJCT,LGUI,PAST,PSLS,HOME,PGUP,LEFT,RGHT,     TRNS,
+		     TRNS,VOLD,VOLU,MUTE,EJCT,LGUI,PAST,PSLS,HOME,PGUP,LEFT,RGHT, DEL,TRNS,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,          TRNS,
 		     FN4, TRNS,TRNS,                FN3,               TRNS,TRNS,TRNS,TRNS
 		     ),
@@ -178,7 +178,7 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
   [LAYER]=KEYMAP_HHKB(
 		     POWER,FN11,FN12,FN13,FN14,TRNS,TRNS,NLCK,PSLS,PAST,PMNS,PMNS,PPLS,TRNS,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_7,KP_8,KP_9,PPLS,PPLS, PPLS,TRNS,
-		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_4,KP_5,KP_6,PENT,CALC,      TRNS,
+		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_4,KP_5,KP_6,PENT,CALC, TRNS,TRNS,
 		     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,KP_1,KP_2,KP_3,PENT,           TRNS,
 		     TRNS,TRNS,TRNS,                KP_0,               PDOT,TRNS,TRNS,TRNS
 		      ),
