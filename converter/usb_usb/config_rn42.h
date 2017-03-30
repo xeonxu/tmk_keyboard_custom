@@ -106,7 +106,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SUART_IN_PIN    PIND
 #define SUART_IN_BIT    1
 
-
+/* Define IOS toggle key to eject. */
+#define IOS_KEYBOARD_TOGGLE TRANSPORT_EJECT
 /*
  * Feature disable options
  *  These options are also useful to firmware size reduction.

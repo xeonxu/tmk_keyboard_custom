@@ -212,6 +212,7 @@ static void send_system(uint16_t data)
 static uint16_t usage2bits(uint16_t usage)
 {
     switch (usage) {
+        case IOS_KEYBOARD_TOGGLE:     return 0x08; /* Define iOS keyboard toggle key in config_rn42.h. */
         case APPCONTROL_HOME:         return 0x01;
         case APPLAUNCH_EMAIL:         return 0x02;
         case APPCONTROL_SEARCH:       return 0x04;
@@ -226,7 +227,6 @@ static uint16_t usage2bits(uint16_t usage)
         case TRANSPORT_STOP_EJECT:    return 0x800;
         case TRANSPORT_FAST_FORWARD:  return 0x1000;
         case TRANSPORT_REWIND:        return 0x2000;
-        case TRANSPORT_EJECT:         return 0x08; /* Use eject key to toggle iOS keyboard. */
         //case return 0x4000;   // Stop/eject
         //case return 0x8000;   // Internet browser
     };
