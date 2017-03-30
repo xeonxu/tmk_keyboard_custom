@@ -226,6 +226,7 @@ static uint16_t usage2bits(uint16_t usage)
         case TRANSPORT_STOP_EJECT:    return 0x800;
         case TRANSPORT_FAST_FORWARD:  return 0x1000;
         case TRANSPORT_REWIND:        return 0x2000;
+        case TRANSPORT_EJECT:         return 0x08; /* Use eject key to toggle iOS keyboard. */
         //case return 0x4000;   // Stop/eject
         //case return 0x8000;   // Internet browser
     };
