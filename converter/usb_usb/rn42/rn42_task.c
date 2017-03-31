@@ -95,9 +95,12 @@ void rn42_task(void)
 	}
 	else
 	{
-	    if (host_get_driver() != &rn42_driver) {
+	    if (host_get_driver() != &rn42_driver && rn42_linked()) {
 		clear_keyboard();
 		host_set_driver(&rn42_driver);
+	    } else if (!rn42_linked()) {
+		clear_keyboard();
+		host_set_driver(&rn42_config_driver);
 	    }
 	}
     }
@@ -284,6 +287,15 @@ static void pairing(void)
     exit_command_mode();
 }
 
+static void reconnectting(void)
+{
+    enter_command_mode();
+    rn42_autoconnect();
+    SEND_STR("C\r\n");   // connect the host. No need to exit command mode after execute this command.
+    clear_keyboard();
+    host_set_driver(prev_driver);
+}
+
 bool command_extra(uint8_t code)
 {
     uint32_t t;
@@ -306,6 +318,7 @@ bool command_extra(uint8_t code)
 #endif
             print("p:       pairing\n");
             print("z/o:     disconnect\n");
+            print("r:       reconnect\n");
 
             if (config_mode) {
                 return true;
@@ -313,9 +326,13 @@ bool command_extra(uint8_t code)
                 print("u/t:     toggle Force USB mode\n");
                 return false;   // to display default command help
             }
+        case KC_R:
+            reconnectting();
+            return true;
         case KC_O:
         case KC_Z:
             rn42_putc(0x00);
+            rn42_disconnect();
             return true;
         case KC_P:
             pairing();
