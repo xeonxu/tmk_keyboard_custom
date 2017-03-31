@@ -95,10 +95,13 @@ void rn42_task(void)
 	}
 	else
 	{
-	    if (host_get_driver() != &rn42_driver) {
+	    if (host_get_driver() != &rn42_driver && rn42_linked()) {
 		clear_keyboard();
 		host_set_driver(&rn42_driver);
-	    }
+	    } else if (!rn42_linked()) {
+		clear_keyboard();
+		host_set_driver(&rn42_config_driver);
+	    } 
 	}
     }
 
@@ -316,6 +319,7 @@ bool command_extra(uint8_t code)
         case KC_O:
         case KC_Z:
             rn42_putc(0x00);
+	    rn42_disconnect();
             return true;
         case KC_P:
             pairing();
