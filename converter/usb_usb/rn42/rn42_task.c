@@ -287,7 +287,9 @@ static void pairing(void)
 bool command_extra(uint8_t code)
 {
     uint32_t t;
+#ifdef BATTERY_ENABLE
     uint16_t b;
+#endif
     switch (code) {
         case KC_H:
         case KC_SLASH: /* ? */
