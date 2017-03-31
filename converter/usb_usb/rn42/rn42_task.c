@@ -147,13 +147,13 @@ void rn42_task(void)
 
             /* Connection monitor */
             /* Connect and forcing usb */
-            if(rn42_linked() && force_usb) {
+            if(rn42_linked() && force_usb && !config_mode) {
                 /* dprintf("#1\r\n"); */
                 status_led(BT_LED_ON);
-            } else if (!rn42_linked() && rn42_autoconnecting()) { /* No connecting, wait paring */
+            } else if (!rn42_linked() && rn42_autoconnecting() && !config_mode) { /* No connecting, wait paring */
                 /* dprintf("#2\r\n"); */
                 status_led(BT_LED_TOG);
-            } else if (rn42_rts()) { /* No BT module */
+            } else if (rn42_rts() || config_mode) { /* No BT module */
                 /* dprintf("#3\r\n"); */
                 status_led(BT_LED_OFF);
             }
@@ -162,7 +162,7 @@ void rn42_task(void)
         {
             time_count = ++time_count % 5;
             bt_prev_timer += bt_e/300*300;
-            if (!rn42_rts() && rn42_linked() && !force_usb) {
+            if (!rn42_rts() && rn42_linked() && !force_usb && !config_mode) {
                 /* dprintf("#4 bt_e:%02u\r\n",bt_e); */
                 status_led(BT_LED_TOG);
             }
@@ -179,6 +179,7 @@ static host_driver_t *prev_driver = &rn42_driver;
 
 static void enter_command_mode(void)
 {
+    status_led(BT_LED_OFF);
     prev_driver = host_get_driver();
     clear_keyboard();
     host_set_driver(&rn42_config_driver);   // null driver; not to send a key to host
