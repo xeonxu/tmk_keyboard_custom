@@ -41,7 +41,7 @@ void rn42_init(void)
     DDRC &= ~(1<<6);
     PORTC &= ~(1<<6);
 
-    // PD5: CTS(low: allow to send, high:not allow)
+    // PD4: CTS(low: allow to send, high:not allow)
     DDRD |= (1<<4);
     PORTD &= ~(1<<4);
 
