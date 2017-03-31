@@ -21,14 +21,22 @@
 static bool config_mode = false;
 static bool force_usb = false;
 
-static void status_led(bool on)
+static void status_led(uint8_t on)
 {
-    if (on) {
-        DDRD  |=  (1<<5);
+    switch (on) {
+    case BT_LED_ON:
+	DDRD  |=  (1<<5);
         PORTD &= ~(1<<5);
-    } else {
-        DDRD  |=  (1<<5);
+	break;
+    case BT_LED_TOG:
+	DDRD  |=  (1<<5);
+        PORTD ^=  (1<<5);
+	break;
+    case BT_LED_OFF:
+    default:
+	DDRD  |=  (1<<5);
         PORTD |=  (1<<5);
+	break;
     }
 }
 
@@ -125,11 +133,40 @@ void rn42_task(void)
     }
 #endif
 
-    /* Connection monitor */
-    if (!rn42_rts() && rn42_linked()) {
-        status_led(true);
-    } else {
-        status_led(false);
+    static uint16_t bt_prev_timer = 0;
+    uint16_t bt_e = timer_elapsed(bt_prev_timer);
+    /* every 200 msec */
+    if (bt_e > 200) {
+        static uint16_t time_count = 0;
+
+        /* dprintf("time_c:%02u\r\n",time_count); */
+        /* every second */
+        if (time_count >= 4) {
+            time_count = 0;
+            /* dprintf("bt_p:%02u \tbt_e:%02u\t\r\n", bt_prev_timer, bt_e); */
+
+            /* Connection monitor */
+            /* Connect and forcing usb */
+            if(rn42_linked() && force_usb) {
+                /* dprintf("#1\r\n"); */
+                status_led(BT_LED_ON);
+            } else if (!rn42_linked() && rn42_autoconnecting()) { /* No connecting, wait paring */
+                /* dprintf("#2\r\n"); */
+                status_led(BT_LED_TOG);
+            } else if (rn42_rts()) { /* No BT module */
+                /* dprintf("#3\r\n"); */
+                status_led(BT_LED_OFF);
+            }
+        }
+        else if (bt_e > 300)
+        {
+            time_count = ++time_count % 5;
+            bt_prev_timer += bt_e/300*300;
+            if (!rn42_rts() && rn42_linked() && !force_usb) {
+                /* dprintf("#4 bt_e:%02u\r\n",bt_e); */
+                status_led(BT_LED_TOG);
+            }
+        }
     }
 }
 
