@@ -153,7 +153,7 @@ void rn42_task(void)
             if(rn42_linked() && force_usb && !config_mode) {
                 /* dprintf("#1\r\n"); */
                 status_led(BT_LED_ON);
-            } else if (!rn42_linked() && rn42_autoconnecting() && !config_mode) { /* No connecting, wait paring */
+            } else if (!rn42_linked() && !config_mode) { /* No connecting, wait paring */
                 /* dprintf("#2\r\n"); */
                 status_led(BT_LED_TOG);
             } else if (rn42_rts() || config_mode) { /* No BT module */
