@@ -165,11 +165,10 @@ void rn42_print_response(void)
 static void send_keyboard(report_keyboard_t *report)
 {
     // wake from deep sleep
-/*
-    PORTD |= (1<<5);    // high
+
+    PORTB ^= (1<<0);    // high
     wait_ms(5);
-    PORTD &= ~(1<<5);   // low
-*/
+    PORTB ^= (1<<0);   // low
 
     serial_send(0xFD);  // Raw report mode
     serial_send(9);     // length
@@ -187,11 +186,10 @@ static void send_keyboard(report_keyboard_t *report)
 static void send_mouse(report_mouse_t *report)
 {
     // wake from deep sleep
-/*
-    PORTD |= (1<<5);    // high
+
+    PORTB ^= (1<<0);    // high
     wait_ms(5);
-    PORTD &= ~(1<<5);   // low
-*/
+    PORTB ^= (1<<0);   // low
 
     serial_send(0xFD);  // Raw report mode
     serial_send(5);     // length
