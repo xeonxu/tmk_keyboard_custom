@@ -317,8 +317,9 @@ bool command_extra(uint8_t code)
             print("F1-F4:   store link\n");
 #endif
             print("p:       pairing\n");
-            print("z/o:     disconnect\n");
+            print("z:       disconnect\n");
             print("r:       reconnect\n");
+            print("o:       toggle connect\n");
 
             if (config_mode) {
                 return true;
@@ -326,12 +327,18 @@ bool command_extra(uint8_t code)
                 print("u/t:     toggle Force USB mode\n");
                 return false;   // to display default command help
             }
+        case KC_O:
+            if (rn42_linked()) {
+                rn42_putc(0x00);
+                rn42_disconnect();
+            } else {
+                reconnectting();
+            }
+            return true;
         case KC_R:
             reconnectting();
             return true;
-        case KC_O:
         case KC_Z:
-            rn42_putc(0x00);
             rn42_disconnect();
             return true;
         case KC_P:
