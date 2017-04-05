@@ -113,10 +113,10 @@ KBDReportParser kbd_parser4;
 #endif
 #endif
 
-#ifdef HID_MOUSE_ENABLE
+// #ifdef HID_MOUSE_ENABLE
 HIDBoot<HID_PROTOCOL_MOUSE>       mouse1(&usb_host);
 MOUSEReportParser mouse_parser1;
-#endif
+// #endif
 
 
 uint8_t matrix_rows(void) { return MATRIX_ROWS; }
@@ -140,9 +140,9 @@ void matrix_init(void) {
 #endif
 #endif
 #endif
-#ifdef HID_MOUSE_ENABLE
+// #ifdef HID_MOUSE_ENABLE
     mouse1.SetReportParser(0, (HIDReportParser*)&mouse_parser1);
-#endif
+// #endif
 }
 
 static void or_report(report_keyboard_t report) {
