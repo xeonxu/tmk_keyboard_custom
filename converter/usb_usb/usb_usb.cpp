@@ -74,6 +74,8 @@ static uint8_t mouse_button;
 
 static bool matrix_is_mod = false;
 
+uint8_t use_hidmouse = false;
+
 /*
  * USB Host Shield HID keyboards
  * This supports two cascaded hubs and four keyboards
@@ -89,9 +91,8 @@ USBHub hub2(&usb_host);
 
 #ifdef HID_COMPOSITE_ENABLE
 HIDBoot<HID_PROTOCOL_KEYBOARD | HID_PROTOCOL_MOUSE> composite(&usb_host);
-#else
-HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd1(&usb_host);
 #endif
+HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd1(&usb_host);
 #if HID_KEYBOARD_COUNT > 1
 HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd2(&usb_host);
 #if HID_KEYBOARD_COUNT > 2
@@ -126,11 +127,15 @@ void matrix_init(void) {
     // USB Host Shield setup
     usb_host.Init();
 #ifdef HID_COMPOSITE_ENABLE
-    composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
-    composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
-#else
-    kbd1.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+    if(true == use_hidmouse){
+        composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+        composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
+    }
+    else
 #endif
+    {
+        kbd1.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+    }
 #if HID_KEYBOARD_COUNT > 1
     kbd2.SetReportParser(0, (HIDReportParser*)&kbd_parser2);
 #if HID_KEYBOARD_COUNT > 2
@@ -338,10 +343,14 @@ void matrix_print(void) {
 void led_set(uint8_t usb_led)
 {
 #ifdef HID_COMPOSITE_ENABLE
-    composite.SetReport(0, 0, 2, 0, 1, &usb_led);
-#else
-    kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
+    if(true == use_hidmouse){
+	composite.SetReport(0, 0, 2, 0, 1, &usb_led);
+    }
+    else
 #endif
+    {
+        kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
+    }
 #if HID_KEYBOARD_COUNT > 1
     kbd2.SetReport(0, 0, 2, 0, 1, &usb_led);
 #if HID_KEYBOARD_COUNT > 2
