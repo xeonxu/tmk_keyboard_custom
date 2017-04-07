@@ -88,13 +88,13 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 # Build Options
 #   comment out to disable the options.
 #
-# LEONARDO_ENABLE = yes   # Use arduino leonardo as main controller
-MOUSEKEY_ENABLE = yes	# Mouse keys
+LEONARDO_ENABLE = yes   # Use arduino leonardo as main controller
+# MOUSEKEY_ENABLE = yes	# Mouse keys
 HID_MOUSE_ENABLE = yes # Use mouse via U2U
-# EXTRAKEY_ENABLE = yes	# Media control and System control
-CONSOLE_ENABLE = yes	# Console for debug
+EXTRAKEY_ENABLE = yes	# Media control and System control
+# CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
-# RAWHID_ENABLE = yes	# Rawhid support flash eeprom without enter in bootloader
+# RAWHID_ENABLE = yes  # Rawhid support flash eeprom without enter in bootloader
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
