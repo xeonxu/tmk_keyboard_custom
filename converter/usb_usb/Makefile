@@ -94,6 +94,7 @@ HID_MOUSE_ENABLE = yes # Use mouse via U2U
 EXTRAKEY_ENABLE = yes	# Media control and System control
 # CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
+# RAWHID_ENABLE = yes	# Rawhid support flash eeprom without enter in bootloader
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
@@ -131,6 +132,15 @@ OPT_DEFS += -DLEONARDO_ENABLE
 OPT_DEFS += -DLEONARDO_LED
 else
 OPT_DEFS += -DTMK_LED
+endif
+
+ifeq (yes, $(strip $(RAWHID_ENABLE)))
+ifneq (yes,$(strip $(CONSOLE_ENABLE)))
+CONSOLE_ENABLE = yes	# Console enable to support rawhid
+endif
+ifneq (yes,$(strip $(KEYMAP_IN_EEPROM_ENABLE)))
+KEYMAP_IN_EEPROM_ENABLE = yes	# Keymap in eeprom
+endif
 endif
 
 ifeq (yes,$(strip $(HID_MOUSE_ENABLE)))
@@ -189,5 +199,5 @@ debug-on: OPT_DEFS := $(filter-out -DMOUSEKEY_ENABLE,$(OPT_DEFS))
 debug-on: all
 
 debug-off: EXTRAFLAGS += -DNO_DEBUG -DNO_PRINT
-debug-off: OPT_DEFS := $(filter-out -DCONSOLE_ENABLE,$(OPT_DEFS))
+# debug-off: OPT_DEFS := $(filter-out -DCONSOLE_ENABLE,$(OPT_DEFS))
 debug-off: all

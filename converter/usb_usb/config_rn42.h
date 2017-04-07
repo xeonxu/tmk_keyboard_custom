@@ -20,7 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define VENDOR_ID       0xFEED
+#if defined(RAWHID_ENABLE)
+#define PRODUCT_ID      0x005B
+#else
 #define PRODUCT_ID      0xB7B7
+#endif
 #define DEVICE_VER      0x0104
 #define MANUFACTURER    t.m.k.
 #define PRODUCT         USB2USB BT
