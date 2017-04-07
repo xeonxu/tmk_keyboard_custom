@@ -67,10 +67,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Integrated key state of all keyboards
 static report_keyboard_t keyboard_report;
-#ifdef HID_MOUSE_ENABLE
+// #ifdef HID_MOUSE_ENABLE
 extern report_mouse_t mouse_report;
 static uint8_t mouse_button;
-#endif
+// #endif
 
 static bool matrix_is_mod = false;
 
@@ -91,11 +91,11 @@ USBHub hub2(&usb_host);
 
 HIDBoot<HID_PROTOCOL_KEYBOARD
 #ifdef HID_COMPOSITE_ENABLE
- | HID_PROTOCOL_MOUSE
+ // | HID_PROTOCOL_MOUSE
 #endif
 > composite(&usb_host);
 #if HID_KEYBOARD_COUNT > 1
-HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd2(&usb_host);
+HIDBoot<HID_PROTOCOL_MOUSE>    kbd2(&usb_host);
 #if HID_KEYBOARD_COUNT > 2
 HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd3(&usb_host);
 #if HID_KEYBOARD_COUNT > 3
@@ -115,10 +115,10 @@ KBDReportParser kbd_parser4;
 #endif
 #endif
 
-#ifdef HID_MOUSE_ENABLE
+// #ifdef HID_MOUSE_ENABLE
 HIDBoot<HID_PROTOCOL_MOUSE>       mouse1(&usb_host);
 MOUSEReportParser mouse_parser1;
-#endif
+// #endif
 
 
 uint8_t matrix_rows(void) { return MATRIX_ROWS; }
@@ -130,7 +130,7 @@ void matrix_init(void) {
     composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
 #ifdef HID_COMPOSITE_ENABLE
     if(true == use_hidmouse){
-        composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
+        kbd2.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
     }
 #endif
 #if HID_KEYBOARD_COUNT > 1
