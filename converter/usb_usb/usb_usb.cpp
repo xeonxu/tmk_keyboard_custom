@@ -35,10 +35,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "action.h"
 #include "host.h"
 
-// #define HID_MOUSE_ENABLE
-// #define HID_COMPOSITE_ENABLE
+
 #define HID_KEYBOARD_COUNT 2
 #define USB_HUB_COUNT 1
+#if defined(HID_COMPOSITE_ENABLE) && (HID_KEYBOARD_COUNT < 2)
+#undef HID_KEYBOARD_COUNT
+#define HID_KEYBOARD_COUNT 2
+#endif
 
 /* KEY CODE to Matrix
  *
@@ -74,6 +77,8 @@ static uint8_t mouse_button;
 
 static bool matrix_is_mod = false;
 
+bool no_hidmouse __attribute__ ((section (".noinit")));
+
 /*
  * USB Host Shield HID keyboards
  * This supports two cascaded hubs and four keyboards
@@ -87,29 +92,20 @@ USBHub hub2(&usb_host);
 #endif
 #endif
 
-#ifdef HID_COMPOSITE_ENABLE
-HIDBoot<HID_PROTOCOL_KEYBOARD | HID_PROTOCOL_MOUSE> composite(&usb_host);
-#else
 HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd1(&usb_host);
-#endif
-#if HID_KEYBOARD_COUNT > 1
-HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd2(&usb_host);
 #if HID_KEYBOARD_COUNT > 2
-HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd3(&usb_host);
+HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd2(&usb_host);
 #if HID_KEYBOARD_COUNT > 3
-HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd4(&usb_host);
+HIDBoot<HID_PROTOCOL_KEYBOARD>    kbd3(&usb_host);
 #endif
 #endif
-#endif
+HIDBoot<HID_PROTOCOL_KEYBOARD | HID_PROTOCOL_MOUSE> composite(&usb_host);
 
 KBDReportParser kbd_parser1;
-#if HID_KEYBOARD_COUNT > 1
+#if HID_KEYBOARD_COUNT > 2
 KBDReportParser kbd_parser2;
-#if HID_KEYBOARD_COUNT > 1
+#if HID_KEYBOARD_COUNT > 3
 KBDReportParser kbd_parser3;
-#if HID_KEYBOARD_COUNT > 1
-KBDReportParser kbd_parser4;
-#endif
 #endif
 #endif
 
@@ -126,18 +122,19 @@ void matrix_init(void) {
     // USB Host Shield setup
     usb_host.Init();
 #ifdef HID_COMPOSITE_ENABLE
-    composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
-    composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
-#else
-    kbd1.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+    if(false == no_hidmouse) {
+	composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+        composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
+    }
+    else
 #endif
-#if HID_KEYBOARD_COUNT > 1
-    kbd2.SetReportParser(0, (HIDReportParser*)&kbd_parser2);
+    {
+	kbd1.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
+    }
 #if HID_KEYBOARD_COUNT > 2
-    kbd3.SetReportParser(0, (HIDReportParser*)&kbd_parser3);
+    kbd2.SetReportParser(0, (HIDReportParser*)&kbd_parser2);
 #if HID_KEYBOARD_COUNT > 3
-    kbd4.SetReportParser(0, (HIDReportParser*)&kbd_parser4);
-#endif
+    kbd3.SetReportParser(0, (HIDReportParser*)&kbd_parser3);
 #endif
 #endif
 #ifdef HID_MOUSE_ENABLE
@@ -162,50 +159,38 @@ static void or_report(report_keyboard_t report) {
 
 uint8_t matrix_scan(void) {
     static uint16_t last_time_stamp1 = 0;
-#if HID_KEYBOARD_COUNT > 1
-    static uint16_t last_time_stamp2 = 0;
 #if HID_KEYBOARD_COUNT > 2
-    static uint16_t last_time_stamp3 = 0;
+    static uint16_t last_time_stamp2 = 0;
 #if HID_KEYBOARD_COUNT > 3
-    static uint16_t last_time_stamp4 = 0;
-#endif
+    static uint16_t last_time_stamp3 = 0;
 #endif
 #endif
 
     // check report came from keyboards
     if (kbd_parser1.time_stamp != last_time_stamp1
-#if HID_KEYBOARD_COUNT > 1
-        || kbd_parser2.time_stamp != last_time_stamp2
 #if HID_KEYBOARD_COUNT > 2
-        || kbd_parser3.time_stamp != last_time_stamp3
+        || kbd_parser2.time_stamp != last_time_stamp2
 #if HID_KEYBOARD_COUNT > 3
-        || kbd_parser4.time_stamp != last_time_stamp4
-#endif
+        || kbd_parser3.time_stamp != last_time_stamp3
 #endif
 #endif
     ) {
 
         last_time_stamp1 = kbd_parser1.time_stamp;
-#if HID_KEYBOARD_COUNT > 1
-        last_time_stamp2 = kbd_parser2.time_stamp;
 #if HID_KEYBOARD_COUNT > 2
-        last_time_stamp3 = kbd_parser3.time_stamp;
+        last_time_stamp2 = kbd_parser2.time_stamp;
 #if HID_KEYBOARD_COUNT > 3
-        last_time_stamp4 = kbd_parser4.time_stamp;
-#endif
+        last_time_stamp3 = kbd_parser3.time_stamp;
 #endif
 #endif
 
         // clear and integrate all reports
         keyboard_report = {};
         or_report(kbd_parser1.report);
-#if HID_KEYBOARD_COUNT > 1
-        or_report(kbd_parser2.report);
 #if HID_KEYBOARD_COUNT > 2
-        or_report(kbd_parser3.report);
+        or_report(kbd_parser2.report);
 #if HID_KEYBOARD_COUNT > 3
-        or_report(kbd_parser4.report);
-#endif
+        or_report(kbd_parser3.report);
 #endif
 #endif
 
@@ -338,17 +323,18 @@ void matrix_print(void) {
 void led_set(uint8_t usb_led)
 {
 #ifdef HID_COMPOSITE_ENABLE
-    composite.SetReport(0, 0, 2, 0, 1, &usb_led);
-#else
-    kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
+    if(false == no_hidmouse) {
+    	composite.SetReport(0, 0, 2, 0, 1, &usb_led);
+    }
+    else
 #endif
-#if HID_KEYBOARD_COUNT > 1
-    kbd2.SetReport(0, 0, 2, 0, 1, &usb_led);
+    {
+	kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
+    }
 #if HID_KEYBOARD_COUNT > 2
-    kbd3.SetReport(0, 0, 2, 0, 1, &usb_led);
+    kbd2.SetReport(0, 0, 2, 0, 1, &usb_led);
 #if HID_KEYBOARD_COUNT > 3
-    kbd4.SetReport(0, 0, 2, 0, 1, &usb_led);
-#endif
+    kbd3.SetReport(0, 0, 2, 0, 1, &usb_led);
 #endif
 #endif
 }

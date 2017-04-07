@@ -91,8 +91,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 enum keymap_layout {
-    BASE = 0,
-    SAFE,
+    SAFE = 0,
+    BASE,
     /* PSEUDO_US, */
     /* IOS, */
     DVORAK,

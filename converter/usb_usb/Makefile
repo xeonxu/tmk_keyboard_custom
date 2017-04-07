@@ -89,12 +89,13 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 #   comment out to disable the options.
 #
 LEONARDO_ENABLE = yes   # Use arduino leonardo as main controller
-# MOUSEKEY_ENABLE = yes	# Mouse keys
+HID_COMPOSITE_ENABLE = yes # Use composite device via U2U
 HID_MOUSE_ENABLE = yes # Use mouse via U2U
+MOUSEKEY_ENABLE = yes	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Media control and System control
 # CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
-# RAWHID_ENABLE = yes	# Rawhid support flash eeprom without enter in bootloader
+# RAWHID_ENABLE = yes  # Rawhid support flash eeprom without enter in bootloader
 # KEYMAP_IN_EEPROM_ENABLE = yes	# External keymap in eeprom
 # LEDMAP_ENABLE = yes	# Enable LED mapping
 # LEDMAP_IN_EEPROM_ENABLE = yes # Read LED mapping from eeprom
@@ -145,7 +146,13 @@ endif
 
 ifeq (yes,$(strip $(HID_MOUSE_ENABLE)))
 OPT_DEFS += -DHID_MOUSE_ENABLE
+endif
+
+ifeq (yes,$(strip $(HID_COMPOSITE_ENABLE)))
 OPT_DEFS += -DHID_COMPOSITE_ENABLE
+ifneq (yes,$(strip $(HID_MOUSE_ENABLE)))
+OPT_DEFS += -DHID_MOUSE_ENABLE
+endif
 ifneq (yes,$(strip $(MOUSEKEY_ENABLE)))
 MOUSEKEY_ENABLE = yes	# Mouse keys
 endif
@@ -198,6 +205,6 @@ debug-on: OPT_DEFS := $(filter-out -DMOUSE_ENABLE,$(OPT_DEFS))
 debug-on: OPT_DEFS := $(filter-out -DMOUSEKEY_ENABLE,$(OPT_DEFS))
 debug-on: all
 
-debug-off: EXTRAFLAGS += -DNO_DEBUG -DNO_PRINT
+debug-off: EXTRAFLAGS += -DNO_DEBUG -DPRINT
 # debug-off: OPT_DEFS := $(filter-out -DCONSOLE_ENABLE,$(OPT_DEFS))
 debug-off: all
