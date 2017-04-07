@@ -143,7 +143,9 @@ void matrix_init(void) {
 #endif
 #endif
 #ifdef HID_MOUSE_ENABLE
-    mouse1.SetReportParser(0, (HIDReportParser*)&mouse_parser1);
+    if(true == use_hidmouse){
+	mouse1.SetReportParser(0, (HIDReportParser*)&mouse_parser1);
+    }
 #endif
 }
 
@@ -223,38 +225,40 @@ uint8_t matrix_scan(void) {
     }
 
 #ifdef HID_MOUSE_ENABLE
-    static uint16_t last_mouse_time_stamp = 0;
-    if (last_mouse_time_stamp != mouse_parser1.time_stamp) {
-        last_mouse_time_stamp = mouse_parser1.time_stamp;
-        if (mouse_parser1.report.x || mouse_parser1.report.y) {
-            int8_t x = mouse_report.x;
-            int8_t y = mouse_report.y;
-            mouse_report.x = mouse_parser1.report.x;
-            mouse_report.y = mouse_parser1.report.y;
-            host_mouse_send(&mouse_report);
-            mouse_report.x = x;
-            mouse_report.y = y;
-        }
-        if (mouse_parser1.report.v) {
-            uint8_t code = 0;
-            if (mouse_parser1.report.v == 1) code = KC_MS_WH_UP;
-            else if (mouse_parser1.report.v == -1) code = KC_MS_WH_DOWN;
-            if (code) {
-                keyevent_t e;
-                e.key.row = ROW(code);
-                e.key.col = COL(code);
-                e.pressed = 1;
-                e.time = (timer_read() | 1); /* time should not be 0 */
-                action_exec(e);
-                e.pressed = 0;
-                e.time = (timer_read() | 1); /* time should not be 0 */
-                action_exec(e);
-            }
-        }
-        if (mouse_button != mouse_parser1.report.buttons) {
-            mouse_button = mouse_parser1.report.buttons;
-            matrix_is_mod |= true;
-        }
+    if(true == use_hidmouse){
+	static uint16_t last_mouse_time_stamp = 0;
+	if (last_mouse_time_stamp != mouse_parser1.time_stamp) {
+	    last_mouse_time_stamp = mouse_parser1.time_stamp;
+	    if (mouse_parser1.report.x || mouse_parser1.report.y) {
+		int8_t x = mouse_report.x;
+		int8_t y = mouse_report.y;
+		mouse_report.x = mouse_parser1.report.x;
+		mouse_report.y = mouse_parser1.report.y;
+		host_mouse_send(&mouse_report);
+		mouse_report.x = x;
+		mouse_report.y = y;
+	    }
+	    if (mouse_parser1.report.v) {
+		uint8_t code = 0;
+		if (mouse_parser1.report.v == 1) code = KC_MS_WH_UP;
+		else if (mouse_parser1.report.v == -1) code = KC_MS_WH_DOWN;
+		if (code) {
+		    keyevent_t e;
+		    e.key.row = ROW(code);
+		    e.key.col = COL(code);
+		    e.pressed = 1;
+		    e.time = (timer_read() | 1); /* time should not be 0 */
+		    action_exec(e);
+		    e.pressed = 0;
+		    e.time = (timer_read() | 1); /* time should not be 0 */
+		    action_exec(e);
+		}
+	    }
+	    if (mouse_button != mouse_parser1.report.buttons) {
+		mouse_button = mouse_parser1.report.buttons;
+		matrix_is_mod |= true;
+	    }
+	}
     }
 #endif
 
@@ -297,12 +301,14 @@ matrix_row_t matrix_get_row(uint8_t row) {
     }
 
 #ifdef HID_MOUSE_ENABLE
-    if (IS_MOUSEKEY(CODE(row, 0)) && mouse_button) {
-        if (mouse_button & (1<<0)) row_bits |= (1<<(KC_MS_BTN1 - KC_MS_UP));
-        if (mouse_button & (1<<1)) row_bits |= (1<<(KC_MS_BTN2 - KC_MS_UP));
-        if (mouse_button & (1<<2)) row_bits |= (1<<(KC_MS_BTN3 - KC_MS_UP));
-        if (mouse_button & (1<<3)) row_bits |= (1<<(KC_MS_BTN4 - KC_MS_UP));
-        if (mouse_button & (1<<4)) row_bits |= (1<<(KC_MS_BTN5 - KC_MS_UP));
+    if(true == use_hidmouse){
+	if (IS_MOUSEKEY(CODE(row, 0)) && mouse_button) {
+	    if (mouse_button & (1<<0)) row_bits |= (1<<(KC_MS_BTN1 - KC_MS_UP));
+	    if (mouse_button & (1<<1)) row_bits |= (1<<(KC_MS_BTN2 - KC_MS_UP));
+	    if (mouse_button & (1<<2)) row_bits |= (1<<(KC_MS_BTN3 - KC_MS_UP));
+	    if (mouse_button & (1<<3)) row_bits |= (1<<(KC_MS_BTN4 - KC_MS_UP));
+	    if (mouse_button & (1<<4)) row_bits |= (1<<(KC_MS_BTN5 - KC_MS_UP));
+	}
     }
 #endif
 
