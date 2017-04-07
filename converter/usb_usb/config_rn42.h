@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EECONFIG_LEDMAP_IN_EEPROM 8
 
 /* key combination for command */
-#define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))) 
+#define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT)))
 
 
 // /* period of tapping(ms) */
