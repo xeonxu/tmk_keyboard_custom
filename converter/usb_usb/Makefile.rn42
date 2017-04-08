@@ -1,6 +1,6 @@
 TARGET ?= usb_usb_rn42
 CONFIG_H ?= config_rn42.h
 RN42_ENABLE ?= yes
-BTSTORE_ENABLE ?= yes   # Support remote BT address store and restore
-BATTERY_ENABLE ?= yes   # Battery charger and monitor
+BTSTORE_ENABLE ?= no   # Support remote BT address store and restore
+BATTERY_ENABLE ?= no   # Battery charger and monitor
 include Makefile
