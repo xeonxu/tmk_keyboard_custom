@@ -77,7 +77,7 @@ static uint8_t mouse_button;
 
 static bool matrix_is_mod = false;
 
-bool use_hidmouse __attribute__ ((section (".noinit"))) = false;
+bool no_hidmouse __attribute__ ((section (".noinit")));
 
 /*
  * USB Host Shield HID keyboards
@@ -122,7 +122,7 @@ void matrix_init(void) {
     // USB Host Shield setup
     usb_host.Init();
 #ifdef HID_COMPOSITE_ENABLE
-    if(true == use_hidmouse){
+    if(false == no_hidmouse) {
 	composite.SetReportParser(0, (HIDReportParser*)&kbd_parser1);
         composite.SetReportParser(1, (HIDReportParser*)&mouse_parser1);
     }
@@ -323,8 +323,8 @@ void matrix_print(void) {
 void led_set(uint8_t usb_led)
 {
 #ifdef HID_COMPOSITE_ENABLE
-    if(true == use_hidmouse){
-	composite.SetReport(0, 0, 2, 0, 1, &usb_led);
+    if(false == no_hidmouse) {
+    	composite.SetReport(0, 0, 2, 0, 1, &usb_led);
     }
     else
 #endif
